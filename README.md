@@ -4,23 +4,23 @@ This folder contains the final modular OWL/Turtle submission for the story-plot 
 
 ## Main ontology files
 
-- `model-story.ttl`: master ontology importing all conceptual modules
-- `fo.ttl`, `meo.ttl`, `rcc.ttl`: corrected and reused provided ontologies
-- `model-social.ttl`: social relations between characters
-- `model-place.ttl`: place hierarchy and spatial relations
-- `model-time.ttl`: temporal vocabulary and relations
-- `model-event.ttl`: event classes and event relations
-- `model-action.ttl`: action model linked to agents, targets, items, and events
-- `model-plot.ttl`: narrative structure (story, episode, plot point, climax, resolution)
+- [model-story.ttl](model-story.ttl): master ontology importing all conceptual modules
+- [fo.ttl](fo.ttl), [meo.ttl](meo.ttl), [rcc.ttl](rcc.ttl): corrected and reused provided ontologies
+- [model-social.ttl](model-social.ttl): social relations between characters
+- [model-place.ttl](model-place.ttl): place hierarchy and spatial relations
+- [model-time.ttl](model-time.ttl): temporal vocabulary and relations
+- [model-event.ttl](model-event.ttl): event classes and event relations
+- [model-action.ttl](model-action.ttl): action model linked to agents, targets, items, and events
+- [model-plot.ttl](model-plot.ttl): narrative structure (story, episode, plot point, climax, resolution)
 
 ## Instance and support files
 
-- `instances-narn-lite.ttl`: instance ontology importing the master model
-- `competency-questions.md`: competency questions and SPARQL templates
-- `documentation.html`: human-readable documentation
-- `ai-interactions.md`: AI-assisted design notes
-- `requirements-checklist.md`: requirement-to-file mapping
-- `catalog-v001.xml`: Protégé local import mapping file
+- [instances-narn-lite.ttl](instances-narn-lite.ttl): instance ontology importing the master model
+- [competency-questions.md](competency-questions.md): competency questions and SPARQL templates
+- [documentation.html](documentation.html): human-readable documentation
+- [ai-interactions.md](ai-interactions.md): AI-assisted design notes
+- [requirements-checklist.md](requirements-checklist.md): requirement-to-file mapping
+- [catalog-v001.xml](catalog-v001.xml): Protégé local import mapping file
 
 ## Validation
 
