@@ -1,0 +1,65 @@
+@prefix krr: <http://example.org/krr/story/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+krr:TimeOntology a owl:Ontology;
+    rdfs:label "Time module"@en;
+    rdfs:comment "Module for temporal entities and Allen-style event relations."@en .
+
+krr:TemporalEntity a owl:Class;
+    rdfs:label "temporal entity"@en;
+    rdfs:comment "A time point or interval used to situate events in time."@en .
+
+krr:before a owl:ObjectProperty, owl:TransitiveProperty;
+    rdfs:label "before"@en;
+    rdfs:comment "Temporal precedence relation."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:after .
+
+krr:after a owl:ObjectProperty;
+    rdfs:label "after"@en;
+    rdfs:comment "Inverse of before."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:before .
+
+krr:overlaps a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "overlaps"@en;
+    rdfs:comment "Two temporal entities overlap partially."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity .
+
+krr:meets a owl:ObjectProperty;
+    rdfs:label "meets"@en;
+    rdfs:comment "One temporal entity ends exactly when another starts."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:metBy .
+
+krr:metBy a owl:ObjectProperty;
+    rdfs:label "met by"@en;
+    rdfs:comment "Inverse of meets."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:meets .
+
+krr:during a owl:ObjectProperty;
+    rdfs:label "during"@en;
+    rdfs:comment "A temporal entity is strictly included within another."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:containsTime .
+
+krr:containsTime a owl:ObjectProperty;
+    rdfs:label "contains time"@en;
+    rdfs:comment "Inverse of during."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity;
+    owl:inverseOf krr:during .
+
+krr:simultaneousWith a owl:ObjectProperty, owl:SymmetricProperty, owl:TransitiveProperty;
+    rdfs:label "simultaneous with"@en;
+    rdfs:comment "Two temporal entities occur at the same time."@en;
+    rdfs:domain krr:TemporalEntity;
+    rdfs:range krr:TemporalEntity .

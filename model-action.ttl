@@ -1,0 +1,155 @@
+@prefix : <http://example.org/krr/story/ActionOntology#> .
+@prefix krr: <http://example.org/krr/story/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/krr/story/ActionOntology> .
+
+<http://example.org/krr/story/ActionOntology> rdf:type owl:Ontology ;
+                                               rdfs:comment "Module for actions as distinct entities linked to events and actors."@en ;
+                                               rdfs:label "Action module"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/krr/story/actionAtPlace
+krr:actionAtPlace rdf:type owl:ObjectProperty ;
+                  rdfs:domain krr:Action ;
+                  rdfs:range krr:Place ;
+                  rdfs:comment "Relates an action to the place where it takes place."@en ;
+                  rdfs:label "action at place"@en .
+
+
+###  http://example.org/krr/story/agentOfAction
+krr:agentOfAction rdf:type owl:ObjectProperty ;
+                  owl:inverseOf krr:hasAgent ;
+                  rdfs:domain krr:Character ;
+                  rdfs:range krr:Action ;
+                  rdfs:comment "Inverse of hasAgent."@en ;
+                  rdfs:label "agent of action"@en .
+
+
+###  http://example.org/krr/story/duringEvent
+krr:duringEvent rdf:type owl:ObjectProperty ;
+                rdfs:domain krr:Action ;
+                rdfs:range krr:Event ;
+                rdfs:comment "Relates an action to the event in which it occurs."@en ;
+                rdfs:label "during event"@en .
+
+
+###  http://example.org/krr/story/hasAgent
+krr:hasAgent rdf:type owl:ObjectProperty ;
+             rdfs:domain krr:Action ;
+             rdfs:range krr:Character ;
+             rdfs:comment "Relates an action to the character performing it."@en ;
+             rdfs:label "has agent"@en .
+
+
+###  http://example.org/krr/story/hasTarget
+krr:hasTarget rdf:type owl:ObjectProperty ;
+              rdfs:domain krr:Action ;
+              rdfs:range owl:Thing ;
+              rdfs:comment "Relates an action to its target entity."@en ;
+              rdfs:label "has target"@en .
+
+
+###  http://example.org/krr/story/usesInstrument
+krr:usesInstrument rdf:type owl:ObjectProperty ;
+                   rdfs:domain krr:Action ;
+                   rdfs:range krr:Item ;
+                   rdfs:comment "Relates an action to an instrument or item used."@en ;
+                   rdfs:label "uses instrument"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/krr/story/Action
+krr:Action rdf:type owl:Class ;
+           rdfs:subClassOf [ rdf:type owl:Restriction ;
+                             owl:onProperty krr:duringEvent ;
+                             owl:someValuesFrom krr:Event
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty krr:hasAgent ;
+                             owl:someValuesFrom krr:Character
+                           ] ;
+           rdfs:comment "An intentional act performed by an agent in a context."@en ;
+           rdfs:label "action"@en .
+
+
+###  http://example.org/krr/story/Character
+krr:Character rdf:type owl:Class ;
+              rdfs:comment "A character capable of performing or receiving an action."@en ;
+              rdfs:label "character"@en .
+
+
+###  http://example.org/krr/story/CombatAction
+krr:CombatAction rdf:type owl:Class ;
+                 rdfs:subClassOf krr:Action ;
+                 rdfs:comment "An action aimed at harming, defeating, or resisting an opponent."@en ;
+                 rdfs:label "combat action"@en .
+
+
+###  http://example.org/krr/story/Event
+krr:Event rdf:type owl:Class ;
+          rdfs:comment "An event context in which an action takes place."@en ;
+          rdfs:label "event"@en .
+
+
+###  http://example.org/krr/story/GoalDirectedAction
+krr:GoalDirectedAction rdf:type owl:Class ;
+                       owl:equivalentClass [ owl:intersectionOf ( krr:Action
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty krr:hasTarget ;
+                                                                    owl:someValuesFrom owl:Thing
+                                                                  ]
+                                                                  [ rdf:type owl:Restriction ;
+                                                                    owl:onProperty krr:usesInstrument ;
+                                                                    owl:someValuesFrom krr:Item
+                                                                  ]
+                                                                ) ;
+                                             rdf:type owl:Class
+                                           ] ;
+                       rdfs:comment "Action with an explicit target and at least one instrument item."@en ;
+                       rdfs:label "goal-directed action"@en .
+
+
+###  http://example.org/krr/story/Item
+krr:Item rdf:type owl:Class ;
+         rdfs:comment "An item that may be used as an instrument by an action."@en ;
+         rdfs:label "item"@en .
+
+
+###  http://example.org/krr/story/MoveAction
+krr:MoveAction rdf:type owl:Class ;
+               rdfs:subClassOf krr:Action ;
+               rdfs:comment "An action whose main purpose is movement through or toward a place."@en ;
+               rdfs:label "move action"@en .
+
+
+###  http://example.org/krr/story/Place
+krr:Place rdf:type owl:Class ;
+          rdfs:comment "A place used as the spatial context of an action."@en ;
+          rdfs:label "place"@en .
+
+
+###  http://example.org/krr/story/SpeechAction
+krr:SpeechAction rdf:type owl:Class ;
+                 rdfs:subClassOf krr:Action ;
+                 rdfs:comment "An action performed by speaking, advising, warning, or declaring."@en ;
+                 rdfs:label "speech action"@en .
+
+
+###  http://example.org/krr/story/UseItemAction
+krr:UseItemAction rdf:type owl:Class ;
+                  rdfs:subClassOf krr:Action ;
+                  rdfs:comment "An action centered on taking, wielding, or otherwise using an item."@en ;
+                  rdfs:label "use item action"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

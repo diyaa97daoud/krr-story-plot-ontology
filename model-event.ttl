@@ -1,0 +1,202 @@
+@prefix : <http://example.org/krr/story/EventOntology#> .
+@prefix krr: <http://example.org/krr/story/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/krr/story/EventOntology> .
+
+<http://example.org/krr/story/EventOntology> rdf:type owl:Ontology ;
+                                              rdfs:comment "Module for events, participants, locations, temporal ordering, and event hierarchy."@en ;
+                                              rdfs:label "Event module"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/krr/story/afterEvent
+krr:afterEvent rdf:type owl:ObjectProperty ;
+               owl:inverseOf krr:beforeEvent ;
+               rdfs:domain krr:Event ;
+               rdfs:range krr:Event ;
+               rdfs:comment "Inverse of beforeEvent."@en ;
+               rdfs:label "after event"@en .
+
+
+###  http://example.org/krr/story/beforeEvent
+krr:beforeEvent rdf:type owl:ObjectProperty ,
+                         owl:TransitiveProperty ;
+                rdfs:domain krr:Event ;
+                rdfs:range krr:Event ;
+                rdfs:comment "Temporal order relation between events."@en ;
+                rdfs:label "before event"@en .
+
+
+###  http://example.org/krr/story/hasSubEvent
+krr:hasSubEvent rdf:type owl:ObjectProperty ;
+                owl:inverseOf krr:subEventOf ;
+                rdf:type owl:TransitiveProperty ;
+                rdfs:domain krr:Event ;
+                rdfs:range krr:Event ;
+                rdfs:comment "Hierarchical decomposition of events."@en ;
+                rdfs:label "has sub-event"@en .
+
+
+###  http://example.org/krr/story/hasTemporalEntity
+krr:hasTemporalEntity rdf:type owl:ObjectProperty ;
+                      rdfs:domain krr:Event ;
+                      rdfs:range krr:TemporalEntity ;
+                      rdfs:comment "Relates an event to its associated temporal entity."@en ;
+                      rdfs:label "has temporal entity"@en .
+
+
+###  http://example.org/krr/story/involvesCharacter
+krr:involvesCharacter rdf:type owl:ObjectProperty ;
+                      owl:inverseOf krr:participatesInEvent ;
+                      rdfs:domain krr:Event ;
+                      rdfs:range krr:Character ;
+                      rdfs:comment "Relates an event to one involved character."@en ;
+                      rdfs:label "involves character"@en .
+
+
+###  http://example.org/krr/story/occursIn
+krr:occursIn rdf:type owl:ObjectProperty ;
+             rdfs:domain krr:Event ;
+             rdfs:range krr:Place ;
+             rdfs:comment "Relates an event to the place where it occurs."@en ;
+             rdfs:label "occurs in"@en .
+
+
+###  http://example.org/krr/story/participatesInEvent
+krr:participatesInEvent rdf:type owl:ObjectProperty ;
+                        rdfs:domain krr:Character ;
+                        rdfs:range krr:Event ;
+                        rdfs:comment "Inverse of involvesCharacter."@en ;
+                        rdfs:label "participates in event"@en .
+
+
+###  http://example.org/krr/story/subEventOf
+krr:subEventOf rdf:type owl:ObjectProperty ;
+               rdfs:domain krr:Event ;
+               rdfs:range krr:Event ;
+               rdfs:comment "Inverse of hasSubEvent."@en ;
+               rdfs:label "sub-event of"@en .
+
+
+###  http://example.org/krr/story/usesItem
+krr:usesItem rdf:type owl:ObjectProperty ;
+             rdfs:domain krr:Event ;
+             rdfs:range krr:Item ;
+             rdfs:comment "Relates an event to an item used in this event."@en ;
+             rdfs:label "uses item"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/krr/story/BattleEvent
+krr:BattleEvent rdf:type owl:Class ;
+                rdfs:subClassOf krr:Event ;
+                rdfs:comment "An event centered on organized armed conflict."@en ;
+                rdfs:label "battle event"@en .
+
+
+###  http://example.org/krr/story/Character
+krr:Character rdf:type owl:Class ;
+              rdfs:comment "An agentive participant in the story world."@en ;
+              rdfs:label "character"@en .
+
+
+###  http://example.org/krr/story/CouncilEvent
+krr:CouncilEvent rdf:type owl:Class ;
+                 rdfs:subClassOf krr:Event ;
+                 rdfs:comment "An event focused on deliberation, advice, or formal discussion."@en ;
+                 rdfs:label "council event"@en .
+
+
+###  http://example.org/krr/story/DeathEvent
+krr:DeathEvent rdf:type owl:Class ;
+               rdfs:subClassOf krr:Event ;
+               rdfs:comment "An event whose central outcome is the death of a character."@en ;
+               rdfs:label "death event"@en .
+
+
+###  http://example.org/krr/story/Event
+krr:Event rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty krr:hasTemporalEntity ;
+                            owl:someValuesFrom krr:TemporalEntity
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty krr:involvesCharacter ;
+                            owl:someValuesFrom krr:Character
+                          ] ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty krr:occursIn ;
+                            owl:someValuesFrom krr:Place
+                          ] ;
+          rdfs:comment "A happening in the story world involving characters."@en ;
+          rdfs:label "event"@en .
+
+
+###  http://example.org/krr/story/Item
+krr:Item rdf:type owl:Class ;
+         rdfs:comment "A material object that may participate in events."@en ;
+         rdfs:label "item"@en .
+
+
+###  http://example.org/krr/story/JourneyEvent
+krr:JourneyEvent rdf:type owl:Class ;
+                 rdfs:subClassOf krr:Event ;
+                 rdfs:comment "An event involving displacement from one place-context to another."@en ;
+                 rdfs:label "journey event"@en .
+
+
+###  http://example.org/krr/story/LocatedAndTimedEvent
+krr:LocatedAndTimedEvent rdf:type owl:Class ;
+                         owl:equivalentClass [ owl:intersectionOf ( krr:Event
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty krr:hasTemporalEntity ;
+                                                                      owl:someValuesFrom krr:TemporalEntity
+                                                                    ]
+                                                                    [ rdf:type owl:Restriction ;
+                                                                      owl:onProperty krr:occursIn ;
+                                                                      owl:someValuesFrom krr:Place
+                                                                    ]
+                                                                  ) ;
+                                               rdf:type owl:Class
+                                             ] ;
+                         rdfs:comment "Event explicitly attached to a place and a temporal entity."@en ;
+                         rdfs:label "located and timed event"@en .
+
+
+###  http://example.org/krr/story/MultiCharacterEvent
+krr:MultiCharacterEvent rdf:type owl:Class ;
+                        owl:equivalentClass [ owl:intersectionOf ( krr:Event
+                                                                   [ rdf:type owl:Restriction ;
+                                                                     owl:onProperty krr:involvesCharacter ;
+                                                                     owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                                                                     owl:onClass krr:Character
+                                                                   ]
+                                                                 ) ;
+                                              rdf:type owl:Class
+                                            ] ;
+                        rdfs:comment "Event involving at least two distinct characters."@en ;
+                        rdfs:label "multi-character event"@en .
+
+
+###  http://example.org/krr/story/Place
+krr:Place rdf:type owl:Class ;
+          rdfs:comment "A location where events may occur."@en ;
+          rdfs:label "place"@en .
+
+
+###  http://example.org/krr/story/TemporalEntity
+krr:TemporalEntity rdf:type owl:Class ;
+                   rdfs:comment "A time interval or point used to anchor events."@en ;
+                   rdfs:label "temporal entity"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

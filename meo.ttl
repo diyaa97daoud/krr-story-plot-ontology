@@ -1,0 +1,261 @@
+@prefix : <http://purl.org/meo/> .
+@prefix az: <https://w3id.org/people/az/> .
+@prefix fo: <http://purl.org/family/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix meo: <http://purl.org/meo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://purl.org/meo/> .
+
+<http://purl.org/meo/> rdf:type owl:Ontology ;
+                        dct:created "2023-11-19T07:42:42+01:00"^^xsd:dateTime ;
+                        dct:creator az:me ;
+                        dct:modified "2026-04-04T10:00:00+01:00"^^xsd:dateTime ;
+                        dct:title "The Middle-earth ontology"@en ;
+                        rdfs:comment "An ontology for J.R.R. Tolkien's legendarium."@en ;
+                        rdfs:label "The Middle-earth ontology"@en .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/created
+dct:created rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dct:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dct:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dct:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://purl.org/family/isAChildOf
+fo:isAChildOf rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/family/isADescendentOf
+fo:isADescendentOf rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/meo/serves
+meo:serves rdf:type owl:ObjectProperty ;
+           rdfs:label "serves"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://purl.org/meo/Adan
+meo:Adan rdf:type owl:Class ;
+         rdfs:subClassOf meo:Atan ;
+         rdfs:label "Adan"@sjn ,
+                    "Man"@en .
+
+
+###  http://purl.org/meo/Ainu
+meo:Ainu rdf:type owl:Class ;
+         rdfs:subClassOf meo:Immortal ;
+         rdfs:label "Ainu"@qya ,
+                    "Holy one"@en .
+
+
+###  http://purl.org/meo/Atan
+meo:Atan rdf:type owl:Class ;
+         rdfs:label "Atan"@qya ,
+                    "Man"@en ;
+         skos:altLabel "Human"@en ,
+                       "Secondborn"@en .
+
+
+###  http://purl.org/meo/Casar
+meo:Casar rdf:type owl:Class ;
+          rdfs:subClassOf meo:Mortal ;
+          rdfs:label "Casar"@qya ,
+                     "Dwarf"@en .
+
+
+###  http://purl.org/meo/Elda
+meo:Elda rdf:type owl:Class ;
+         owl:equivalentClass meo:Quende ;
+         rdfs:label "Elda"@qya ,
+                    "Elf"@en ;
+         skos:altLabel "Firstborn"@en .
+
+
+###  http://purl.org/meo/Eruhin
+meo:Eruhin rdf:type owl:Class ;
+           rdfs:label "Child of Iluvatar"@en ,
+                      "Eruhin"@qya ;
+           skos:altLabel "Child of Eru"@en .
+
+
+###  http://purl.org/meo/EvilBeing
+meo:EvilBeing rdf:type owl:Class ;
+              rdfs:label "evil being"@en .
+
+
+###  http://purl.org/meo/God
+meo:God rdf:type owl:Class ;
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:oneOf ( meo:eru
+                                        )
+                            ] ;
+        rdfs:comment "A superior singleton class that only contains Eru Iluvatar."@en ;
+        rdfs:label "God"@en .
+
+
+###  http://purl.org/meo/Immortal
+meo:Immortal rdf:type owl:Class ;
+             owl:disjointWith meo:Mortal ;
+             rdfs:label "immortal"@en .
+
+
+###  http://purl.org/meo/Loce
+meo:Loce rdf:type owl:Class ;
+         rdfs:subClassOf meo:EvilBeing ;
+         rdfs:label "Dragon"@en ,
+                    "Loce"@qya .
+
+
+###  http://purl.org/meo/Maia
+meo:Maia rdf:type owl:Class ;
+         rdfs:subClassOf meo:Ainu ;
+         rdfs:label "Beautiful"@en ,
+                    "Maia"@qya .
+
+
+###  http://purl.org/meo/Mortal
+meo:Mortal rdf:type owl:Class ;
+           rdfs:label "mortal"@en .
+
+
+###  http://purl.org/meo/Peredhel
+meo:Peredhel rdf:type owl:Class ;
+             rdfs:subClassOf meo:Eruhin ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty fo:isADescendentOf ;
+                               owl:someValuesFrom meo:Atan
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty fo:isADescendentOf ;
+                               owl:someValuesFrom meo:Elda
+                             ] ;
+             rdfs:label "Half-elf"@en ,
+                        "Peredhel"@sjn .
+
+
+###  http://purl.org/meo/Quende
+meo:Quende rdf:type owl:Class ;
+           rdfs:subClassOf meo:Eruhin ,
+                           meo:Immortal ;
+           rdfs:label "Elf"@en ,
+                      "Quende"@qya ;
+           skos:altLabel "Elda"@qya ,
+                         "Firstborn"@en .
+
+
+###  http://purl.org/meo/Torog
+meo:Torog rdf:type owl:Class ;
+          rdfs:subClassOf meo:EvilBeing ;
+          rdfs:label "Torog"@sjn ,
+                     "Troll"@en .
+
+
+###  http://purl.org/meo/Vala
+meo:Vala rdf:type owl:Class ;
+         rdfs:subClassOf meo:Ainu ;
+         rdfs:label "Vala"@qya ,
+                    "angelic power"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://purl.org/meo/eru
+meo:eru rdf:type owl:NamedIndividual ,
+                 meo:God ;
+        rdfs:label "Eru"@qya ,
+                   "The One"@en ;
+        skos:altLabel "Eru Iluvatar"@qya ,
+                      "Iluvatar"@qya ,
+                      "The Allfather"@en .
+
+
+###  http://purl.org/meo/melkor
+meo:melkor rdf:type owl:NamedIndividual ,
+                    meo:Vala ;
+           owl:sameAs meo:morgoth ;
+           rdfs:label "Melkor"@qya .
+
+
+###  http://purl.org/meo/morgoth
+meo:morgoth rdf:type owl:NamedIndividual .
+
+
+###  http://purl.org/meo/morgoth
+meo:morgoth rdf:type owl:NamedIndividual ,
+                     meo:EvilBeing ;
+            rdfs:label "Morgoth"@sjn ,
+                       "The Black Enemy"@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                         owl:onProperty fo:isAChildOf ;
+                         owl:someValuesFrom meo:Adan
+                       ]
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty fo:isAChildOf ;
+                         owl:someValuesFrom meo:Elda
+                       ]
+                     ) ;
+  rdf:type owl:Class ;
+  rdfs:subClassOf meo:Peredhel
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty fo:isAChildOf ;
+  owl:allValuesFrom meo:Atan ;
+  rdfs:subClassOf meo:Atan
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty fo:isAChildOf ;
+  owl:allValuesFrom meo:Elda ;
+  rdfs:subClassOf meo:Elda
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty meo:serves ;
+  owl:hasValue meo:morgoth ;
+  rdfs:subClassOf meo:EvilBeing
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

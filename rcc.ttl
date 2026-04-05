@@ -1,0 +1,58 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rcc: <https://purl.org/region/rcc8/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+rcc: a owl:Ontology;
+    rdfs:label "The RCC8 ontology"@en;
+    rdfs:comment "An ontology for the Region Connection Calculus."@en .
+
+rcc:Region a owl:Class;
+    rdfs:label "region"@en;
+    rdfs:comment "A continuous extent of space."@en .
+
+rcc:dc a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "disconnected"@en;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:ec a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "externally connected"@en;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:po a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "partially overlapping"@en;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:eq a owl:ObjectProperty, owl:SymmetricProperty, owl:TransitiveProperty, owl:ReflexiveProperty;
+    rdfs:label "equal"@en;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:tpp a owl:ObjectProperty;
+    rdfs:label "tangential proper part"@en;
+    owl:inverseOf rcc:tppi;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:tppi a owl:ObjectProperty;
+    rdfs:label "tangential proper part inverse"@en;
+    owl:inverseOf rcc:tpp;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:ntpp a owl:ObjectProperty;
+    rdfs:label "non-tangential proper part"@en;
+    owl:inverseOf rcc:ntppi;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+rcc:ntppi a owl:ObjectProperty;
+    rdfs:label "non-tangential proper part inverse"@en;
+    owl:inverseOf rcc:ntpp;
+    rdfs:domain rcc:Region;
+    rdfs:range rcc:Region .
+
+[] a owl:AllDisjointProperties;
+   owl:members (rcc:dc rcc:ec rcc:po rcc:tpp rcc:tppi rcc:ntpp rcc:ntppi) .

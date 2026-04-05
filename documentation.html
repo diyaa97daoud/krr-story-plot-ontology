@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Story Plot Ontology Documentation</title>
+    <style>
+      body {
+        font-family: Georgia, serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        line-height: 1.5;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0b3d5c;
+      }
+      code {
+        background: #f3f3f3;
+        padding: 0.1rem 0.3rem;
+        border-radius: 4px;
+      }
+      .box {
+        background: #f8fcff;
+        border: 1px solid #c8dceb;
+        padding: 0.8rem;
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Story Plot Ontology Documentation</h1>
+    <p>
+      This documentation describes a modular OWL/Turtle knowledge model for
+      story plots, aligned with the KRR homework instructions.
+    </p>
+
+    <h2>Design Goals</h2>
+    <ul>
+      <li>
+        Represent characters, places, events, actions, and plot structure.
+      </li>
+      <li>Support timeline reconstruction through temporal relations.</li>
+      <li>
+        Enable consistency checks (for example, impossible co-location
+        situations).
+      </li>
+      <li>Keep examples in a separate instance file.</li>
+    </ul>
+
+    <h2>Modules</h2>
+    <div class="box">
+      <p>
+        <strong>Provided/fixed modules:</strong> <code>fo.ttl</code>,
+        <code>meo.ttl</code>, <code>rcc.ttl</code>
+      </p>
+      <p>
+        <strong>New modules:</strong> <code>model-social.ttl</code>,
+        <code>model-place.ttl</code>, <code>model-time.ttl</code>,
+        <code>model-event.ttl</code>, <code>model-action.ttl</code>,
+        <code>model-plot.ttl</code>
+      </p>
+      <p>
+        <strong>Master import ontology:</strong> <code>model-story.ttl</code>
+      </p>
+      <p>
+        <strong>Instance example:</strong> <code>instances-narn-lite.ttl</code>
+      </p>
+    </div>
+
+    <h2>Modeling Choices</h2>
+    <h3>Characters and Relations</h3>
+    <p>
+      Character typing is connected to the Middle-earth classes where relevant.
+      Family and social relations are represented with explicit inverse and
+      symmetric properties when needed.
+    </p>
+
+    <h3>Places and Space</h3>
+    <p>
+      Places are subclasses of <code>rcc:Region</code> and can be organized
+      through transitive containment. RCC8 relations are used for topological
+      constraints.
+    </p>
+
+    <h3>Events and Time</h3>
+    <p>
+      Events carry participants and locations. Ordering between events is
+      represented through transitive <code>beforeEvent</code>. A separate time
+      module provides Allen-style relation vocabulary.
+    </p>
+
+    <h3>Plot Structure</h3>
+    <p>
+      Narrative abstractions (story, episode, plot point, climax, resolution)
+      are separated from event internals and linked with dedicated properties
+      such as <code>realizedByEvent</code> and <code>hasEndingEvent</code>.
+    </p>
+
+    <h2>Representative Vocabulary and Examples</h2>
+    <div class="box">
+      <h3>Social Module</h3>
+      <p>
+        Example terms include <code>friendOf</code>, <code>allyOf</code>,
+        <code>enemyOf</code>, <code>mentorOf</code>, and <code>protects</code>.
+        In the instance file, Thingol mentors and protects Turin, while Beleg is
+        modeled as both ally and friend.
+      </p>
+
+      <h3>Place Module</h3>
+      <p>
+        Places are typed as <code>Settlement</code>, <code>Fortress</code>, or
+        <code>WildArea</code>, and connected through <code>partOfPlace</code>,
+        <code>containsPlace</code>, <code>adjacentPlace</code>, and RCC8
+        relations. For example, Cabed Naeramarth is part of Brethil and Brethil
+        contains Cabed Naeramarth.
+      </p>
+
+      <h3>Time Module</h3>
+      <p>
+        Temporal entities are now explicitly instantiated and linked to events
+        through <code>hasTemporalEntity</code>. Example relations include
+        <code>before</code> and <code>during</code> between named periods such
+        as the Doriath fosterage period and the council moment within it.
+      </p>
+
+      <h3>Event Module</h3>
+      <p>
+        Event examples cover <code>BattleEvent</code>,
+        <code>JourneyEvent</code>, <code>CouncilEvent</code>, and
+        <code>DeathEvent</code>. The Doriath journey has a modeled sub-event for
+        counsel, and all core events are linked to both a place and a temporal
+        entity.
+      </p>
+
+      <h3>Action Module</h3>
+      <p>
+        Actions are distinct from events. The instance file illustrates
+        <code>UseItemAction</code>, <code>CombatAction</code>,
+        <code>SpeechAction</code>, and <code>MoveAction</code>, each linked to
+        an agent, event context, place, and optional target or instrument.
+      </p>
+
+      <h3>Plot Module</h3>
+      <p>
+        The story is organized with episodes, plot points, a climax, a
+        resolution, and an ending event. These narrative entities are connected
+        to the underlying events through <code>eventInEpisode</code>,
+        <code>realizedByEvent</code>, and <code>hasEndingEvent</code>.
+      </p>
+    </div>
+
+    <h2>Competency Questions</h2>
+    <p>
+      Query templates are provided in <code>competency-questions.md</code> and
+      can be executed against <code>instances-narn-lite.ttl</code>.
+    </p>
+
+    <h2>Validation Notes</h2>
+    <p>
+      The instance file contains a small hypothetical validation pattern for
+      impossible co-location: Turin is attached to two disconnected places at
+      the same temporal entity in test events. This is not part of the narrative
+      canon; it exists to demonstrate how competency questions can detect a
+      spatio-temporal inconsistency pattern.
+    </p>
+    <p>
+      Reasoner validation was performed in Protégé. HermiT completed on the full
+      ontology without errors. ELK also loaded the ontology, but reported
+      expected incompleteness warnings because the model uses OWL constructs
+      outside the OWL 2 EL profile, notably inverse object properties, disjoint
+      object properties, inverse property expressions, and qualified minimum
+      cardinality restrictions. These ELK warnings reflect profile limitations,
+      not a modeling failure.
+    </p>
+
+    <h2>AI Usage</h2>
+    <p>
+      A concise record of AI-assisted design choices is provided in
+      <code>ai-interactions.md</code>.
+    </p>
+  </body>
+</html>

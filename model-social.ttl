@@ -1,0 +1,54 @@
+@prefix krr: <http://example.org/krr/story/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+krr:SocialOntology a owl:Ontology;
+    rdfs:label "Social relations module"@en;
+    rdfs:comment "Module for social relations between story characters."@en .
+
+krr:friendOf a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "friend of"@en;
+    rdfs:comment "Relates two characters who are friends."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character .
+
+krr:allyOf a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "ally of"@en;
+    rdfs:comment "Relates two characters who cooperate toward compatible goals."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character .
+
+krr:enemyOf a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "enemy of"@en;
+    rdfs:comment "Relates two characters in explicit conflict."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character;
+    owl:propertyDisjointWith krr:friendOf .
+
+krr:mentorOf a owl:ObjectProperty;
+    rdfs:label "mentor of"@en;
+    rdfs:comment "Relates a character to another character under their guidance."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character;
+    owl:inverseOf krr:studentOf .
+
+krr:studentOf a owl:ObjectProperty;
+    rdfs:label "student of"@en;
+    rdfs:comment "Inverse relation of mentorOf."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character;
+    owl:inverseOf krr:mentorOf .
+
+krr:protects a owl:ObjectProperty;
+    rdfs:label "protects"@en;
+    rdfs:comment "Relates a protector character to a protected character."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character;
+    owl:inverseOf krr:protectedBy .
+
+krr:protectedBy a owl:ObjectProperty;
+    rdfs:label "protected by"@en;
+    rdfs:comment "Inverse relation of protects."@en;
+    rdfs:domain krr:Character;
+    rdfs:range krr:Character;
+    owl:inverseOf krr:protects .

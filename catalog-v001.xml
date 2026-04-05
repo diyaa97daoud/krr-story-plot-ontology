@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <uri id="Imports Wizard Entry" name="http://purl.org/family/" uri="fo.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://purl.org/meo/" uri="meo.ttl"/>
+    <uri id="Imports Wizard Entry" name="https://purl.org/region/rcc8/" uri="rcc.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/SocialOntology" uri="model-social.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/PlaceOntology" uri="model-place.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/TimeOntology" uri="model-time.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/EventOntology" uri="model-event.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/ActionOntology" uri="model-action.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/PlotOntology" uri="model-plot.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/StoryPlotKnowledgeModel" uri="model-story.ttl"/>
+    <uri id="Imports Wizard Entry" name="http://example.org/krr/story/InstancesNarnLite" uri="instances-narn-lite.ttl"/>
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public"/>
+</catalog>

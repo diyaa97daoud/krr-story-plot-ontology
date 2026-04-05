@@ -1,0 +1,82 @@
+@prefix az: <https://w3id.org/people/az/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix fo: <http://purl.org/family/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+fo: a owl:Ontology;
+    rdfs:label "The family ontology"@en;
+    rdfs:comment "An ontology for family relationships."@en;
+    dct:title "The Family Ontology"@en;
+    dct:created "2023-11-19T14:42:42+01:00"^^xsd:dateTime;
+    dct:modified "2026-04-04T10:00:00+01:00"^^xsd:dateTime;
+    dct:creator az:me .
+
+fo:Male a owl:Class;
+    rdfs:label "male"@en .
+
+fo:Female a owl:Class;
+    rdfs:label "female"@en .
+
+fo:isADescendentOf a owl:ObjectProperty, owl:TransitiveProperty;
+    rdfs:label "is a descendent of"@en;
+    rdfs:comment "A relation between someone and one of their ancestors."@en .
+
+fo:isAnAncestorOf a owl:ObjectProperty, owl:TransitiveProperty;
+    owl:inverseOf fo:isADescendentOf;
+    rdfs:label "is an ancestor of"@en;
+    rdfs:comment "A relation between someone and one of their descendants."@en .
+
+fo:isAChildOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isADescendentOf;
+    owl:inverseOf fo:isAParentOf;
+    rdfs:label "is a child of"@en;
+    rdfs:comment "A relation between someone and their parent."@en .
+
+fo:isAParentOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isAnAncestorOf;
+    owl:inverseOf fo:isAChildOf;
+    rdfs:label "is a parent of"@en;
+    rdfs:comment "A relation between a parent and their child."@en .
+
+fo:isASonOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isAChildOf;
+    rdfs:domain fo:Male;
+    rdfs:label "is a son of"@en .
+
+fo:isADaughterOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isAChildOf;
+    rdfs:domain fo:Female;
+    rdfs:label "is a daughter of"@en .
+
+fo:isTheFatherOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isAParentOf;
+    rdfs:domain fo:Male;
+    rdfs:label "is the father of"@en .
+
+fo:isTheMotherOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isAParentOf;
+    rdfs:domain fo:Female;
+    rdfs:label "is the mother of"@en .
+
+fo:isASiblingOf a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "is a sibling of"@en;
+    rdfs:comment "Two individuals who share at least one parent."@en .
+
+fo:isABrotherOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isASiblingOf;
+    rdfs:domain fo:Male;
+    rdfs:label "is a brother of"@en .
+
+fo:isASisterOf a owl:ObjectProperty;
+    rdfs:subPropertyOf fo:isASiblingOf;
+    rdfs:domain fo:Female;
+    rdfs:label "is a sister of"@en .
+
+fo:isACousinOf a owl:ObjectProperty, owl:SymmetricProperty;
+    owl:propertyChainAxiom (fo:isAChildOf fo:isASiblingOf fo:isAParentOf);
+    rdfs:label "is a cousin of"@en .
+
+fo:isMarriedTo a owl:ObjectProperty, owl:SymmetricProperty;
+    rdfs:label "is married to"@en .

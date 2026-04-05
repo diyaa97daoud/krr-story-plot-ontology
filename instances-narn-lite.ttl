@@ -1,0 +1,223 @@
+@prefix fo: <http://purl.org/family/> .
+@prefix krr: <http://example.org/krr/story/> .
+@prefix meo: <http://purl.org/meo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rcc: <https://purl.org/region/rcc8/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/krr/story/InstancesNarnLite> rdf:type owl:Ontology ;
+    owl:imports <http://example.org/krr/story/StoryPlotKnowledgeModel> ;
+    rdfs:label "Narn lite instances"@en ;
+    rdfs:comment "Instance layer for the simplified Narn i Chin Hurin story model."@en .
+
+krr:narnStory a krr:Story;
+    rdfs:label "Narn i Chin Hurin (simplified)"@en .
+
+krr:hurin a krr:Character, meo:Adan;
+    rdfs:label "Hurin"@en .
+
+krr:morwen a krr:Character, meo:Adan;
+    rdfs:label "Morwen"@en .
+
+krr:turin a krr:Character, meo:Adan;
+    rdfs:label "Turin"@en .
+
+krr:nienor a krr:Character, meo:Adan;
+    rdfs:label "Nienor"@en .
+
+krr:thingol a krr:Character, meo:Elda;
+    rdfs:label "Thingol"@en .
+
+krr:beleg a krr:Character, meo:Elda;
+    rdfs:label "Beleg"@en .
+
+krr:glaurung a krr:Character, meo:Loce, meo:EvilBeing;
+    rdfs:label "Glaurung"@en .
+
+krr:dorLomin a krr:Settlement;
+    rdfs:label "Dor-lomin"@en .
+
+krr:doriath a krr:Settlement;
+    rdfs:label "Doriath"@en .
+
+krr:nargothrond a krr:Fortress;
+    rdfs:label "Nargothrond"@en .
+
+krr:brethil a krr:WildArea;
+    rdfs:label "Brethil"@en .
+
+krr:cabedNaeramarth a krr:WildArea;
+    rdfs:label "Cabed Naeramarth"@en;
+    krr:partOfPlace krr:brethil .
+
+krr:dorLomin rcc:dc krr:nargothrond .
+krr:doriath rcc:ec krr:brethil .
+krr:brethil rcc:ec krr:nargothrond .
+
+krr:dragonHelm a krr:Item;
+    rdfs:label "Dragon-helm of Dor-lomin"@en .
+
+krr:blackSword a krr:Item;
+    rdfs:label "Black Sword"@en .
+
+krr:t1_battlePeriod a krr:TemporalEntity;
+    rdfs:label "Battle period"@en .
+
+krr:t2_doriathPeriod a krr:TemporalEntity;
+    rdfs:label "Doriath fosterage period"@en .
+
+krr:t2_councilMoment a krr:TemporalEntity;
+    rdfs:label "Council in Doriath"@en .
+
+krr:t3_nargothrondArrival a krr:TemporalEntity;
+    rdfs:label "Arrival in Nargothrond"@en .
+
+krr:t4_fallPeriod a krr:TemporalEntity;
+    rdfs:label "Fall of Nargothrond period"@en .
+
+krr:t4_duelMoment a krr:TemporalEntity;
+    rdfs:label "Duel with Glaurung"@en .
+
+krr:t5_finalPeriod a krr:TemporalEntity;
+    rdfs:label "Final tragedy period"@en .
+
+krr:t_conflict a krr:TemporalEntity;
+    rdfs:label "Hypothetical conflicting time slice"@en .
+
+krr:t1_battlePeriod krr:before krr:t2_doriathPeriod .
+krr:t2_doriathPeriod krr:before krr:t3_nargothrondArrival .
+krr:t3_nargothrondArrival krr:before krr:t4_fallPeriod .
+krr:t4_fallPeriod krr:before krr:t5_finalPeriod .
+krr:t2_councilMoment krr:during krr:t2_doriathPeriod .
+krr:t4_duelMoment krr:during krr:t4_fallPeriod .
+krr:t4_duelMoment krr:simultaneousWith krr:t4_duelMoment .
+
+krr:e1_battleUnnumberedTears a krr:BattleEvent;
+    rdfs:label "Battle of Unnumbered Tears"@en;
+    krr:hasTemporalEntity krr:t1_battlePeriod;
+    krr:occursIn krr:dorLomin;
+    krr:involvesCharacter krr:hurin .
+
+krr:e2_turinInDoriath a krr:JourneyEvent;
+    rdfs:label "Turin sent to Doriath"@en;
+    krr:hasTemporalEntity krr:t2_doriathPeriod;
+    krr:occursIn krr:doriath;
+    krr:involvesCharacter krr:turin, krr:thingol .
+
+krr:e2b_councilInDoriath a krr:CouncilEvent;
+    rdfs:label "Thingol advises Turin in Doriath"@en;
+    krr:hasTemporalEntity krr:t2_councilMoment;
+    krr:occursIn krr:doriath;
+    krr:involvesCharacter krr:turin, krr:thingol .
+
+krr:e3_turinInNargothrond a krr:JourneyEvent;
+    rdfs:label "Turin in Nargothrond"@en;
+    krr:hasTemporalEntity krr:t3_nargothrondArrival;
+    krr:occursIn krr:nargothrond;
+    krr:involvesCharacter krr:turin .
+
+krr:e4_fallOfNargothrond a krr:BattleEvent;
+    rdfs:label "Fall of Nargothrond"@en;
+    krr:hasTemporalEntity krr:t4_fallPeriod;
+    krr:occursIn krr:nargothrond;
+    krr:involvesCharacter krr:turin, krr:glaurung .
+
+krr:e5_deathOfTurin a krr:DeathEvent;
+    rdfs:label "Death of Turin"@en;
+    krr:hasTemporalEntity krr:t5_finalPeriod;
+    krr:occursIn krr:cabedNaeramarth;
+    krr:involvesCharacter krr:turin .
+
+krr:e6_turinInDorLominTest a krr:JourneyEvent;
+    rdfs:label "Hypothetical Turin in Dor-lomin at conflict time"@en;
+    rdfs:comment "Validation example used to test impossible co-location queries."@en;
+    krr:hasTemporalEntity krr:t_conflict;
+    krr:occursIn krr:dorLomin;
+    krr:involvesCharacter krr:turin .
+
+krr:e7_turinInNargothrondTest a krr:JourneyEvent;
+    rdfs:label "Hypothetical Turin in Nargothrond at conflict time"@en;
+    rdfs:comment "Validation example used to test impossible co-location queries."@en;
+    krr:hasTemporalEntity krr:t_conflict;
+    krr:occursIn krr:nargothrond;
+    krr:involvesCharacter krr:turin .
+
+krr:e1_battleUnnumberedTears krr:beforeEvent krr:e2_turinInDoriath .
+krr:e2_turinInDoriath krr:beforeEvent krr:e3_turinInNargothrond .
+krr:e3_turinInNargothrond krr:beforeEvent krr:e4_fallOfNargothrond .
+krr:e4_fallOfNargothrond krr:beforeEvent krr:e5_deathOfTurin .
+krr:e2_turinInDoriath krr:hasSubEvent krr:e2b_councilInDoriath .
+
+krr:ep1_exile a krr:Episode;
+    rdfs:label "Exile and fosterage"@en .
+
+krr:ep2_riseAndFall a krr:Episode;
+    rdfs:label "Rise and fall in Nargothrond"@en .
+
+krr:pp1_fallNargothrond a krr:Climax;
+    rdfs:label "Nargothrond destroyed"@en;
+    krr:realizedByEvent krr:e4_fallOfNargothrond .
+
+krr:pp2_tragicEnd a krr:Resolution;
+    rdfs:label "Tragic ending"@en;
+    krr:realizedByEvent krr:e5_deathOfTurin .
+
+krr:narnStory
+    krr:hasCharacter krr:hurin, krr:morwen, krr:turin, krr:nienor, krr:thingol, krr:beleg, krr:glaurung;
+    krr:hasEpisode krr:ep1_exile, krr:ep2_riseAndFall;
+    krr:hasPlotPoint krr:pp1_fallNargothrond, krr:pp2_tragicEnd;
+    krr:hasEndingEvent krr:e5_deathOfTurin .
+
+krr:e1_battleUnnumberedTears krr:eventInEpisode krr:ep1_exile .
+krr:e2_turinInDoriath krr:eventInEpisode krr:ep1_exile .
+krr:e2b_councilInDoriath krr:eventInEpisode krr:ep1_exile .
+krr:e3_turinInNargothrond krr:eventInEpisode krr:ep2_riseAndFall .
+krr:e4_fallOfNargothrond krr:eventInEpisode krr:ep2_riseAndFall .
+krr:e5_deathOfTurin krr:eventInEpisode krr:ep2_riseAndFall .
+
+krr:a1_takeDragonHelm a krr:UseItemAction;
+    rdfs:label "Turin takes the Dragon-helm"@en;
+    krr:hasAgent krr:turin;
+    krr:usesInstrument krr:dragonHelm;
+    krr:duringEvent krr:e3_turinInNargothrond;
+    krr:actionAtPlace krr:nargothrond;
+    krr:hasTarget krr:dragonHelm .
+
+krr:a2_slaysGlaurung a krr:CombatAction;
+    rdfs:label "Turin slays Glaurung"@en;
+    krr:hasAgent krr:turin;
+    krr:usesInstrument krr:blackSword;
+    krr:duringEvent krr:e4_fallOfNargothrond;
+    krr:actionAtPlace krr:nargothrond;
+    krr:hasTarget krr:glaurung .
+
+krr:a3_thingolAdvisesTurin a krr:SpeechAction;
+    rdfs:label "Thingol advises Turin"@en;
+    krr:hasAgent krr:thingol;
+    krr:duringEvent krr:e2b_councilInDoriath;
+    krr:actionAtPlace krr:doriath;
+    krr:hasTarget krr:turin .
+
+krr:a4_turinTravelsToNargothrond a krr:MoveAction;
+    rdfs:label "Turin travels toward Nargothrond"@en;
+    krr:hasAgent krr:turin;
+    krr:duringEvent krr:e3_turinInNargothrond;
+    krr:actionAtPlace krr:nargothrond;
+    krr:hasTarget krr:nargothrond .
+
+krr:e3_turinInNargothrond krr:usesItem krr:dragonHelm .
+krr:e4_fallOfNargothrond krr:usesItem krr:blackSword .
+
+krr:hurin fo:isMarriedTo krr:morwen .
+krr:turin fo:isAChildOf krr:hurin, krr:morwen .
+krr:nienor fo:isAChildOf krr:hurin, krr:morwen .
+
+krr:beleg krr:friendOf krr:turin .
+krr:thingol krr:mentorOf krr:turin .
+krr:thingol krr:protects krr:turin .
+krr:beleg krr:allyOf krr:turin .
+krr:glaurung krr:enemyOf krr:turin .
+
+krr:brethil krr:containsPlace krr:cabedNaeramarth .
+krr:doriath krr:adjacentPlace krr:brethil .

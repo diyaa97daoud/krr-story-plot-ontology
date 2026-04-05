@@ -1,0 +1,187 @@
+@prefix : <http://example.org/krr/story/PlotOntology#> .
+@prefix krr: <http://example.org/krr/story/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/krr/story/PlotOntology> .
+
+<http://example.org/krr/story/PlotOntology> rdf:type owl:Ontology ;
+                                             rdfs:comment "Module for narrative structure concepts: stories, episodes, plot points, climax, and ending."@en ;
+                                             rdfs:label "Plot structure module"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/krr/story/endsStory
+krr:endsStory rdf:type owl:ObjectProperty ;
+              owl:inverseOf krr:hasEndingEvent ;
+              rdfs:domain krr:Event ;
+              rdfs:range krr:Story ;
+              rdfs:comment "Inverse of hasEndingEvent."@en ;
+              rdfs:label "ends story"@en .
+
+
+###  http://example.org/krr/story/episodeOfStory
+krr:episodeOfStory rdf:type owl:ObjectProperty ;
+                   owl:inverseOf krr:hasEpisode ;
+                   rdfs:domain krr:Episode ;
+                   rdfs:range krr:Story ;
+                   rdfs:comment "Inverse of hasEpisode."@en ;
+                   rdfs:label "episode of story"@en .
+
+
+###  http://example.org/krr/story/eventInEpisode
+krr:eventInEpisode rdf:type owl:ObjectProperty ;
+                   rdfs:domain krr:Event ;
+                   rdfs:range krr:Episode ;
+                   rdfs:comment "Relates an event to an episode."@en ;
+                   rdfs:label "event in episode"@en .
+
+
+###  http://example.org/krr/story/hasCharacter
+krr:hasCharacter rdf:type owl:ObjectProperty ;
+                 rdfs:domain krr:Story ;
+                 rdfs:range krr:Character ;
+                 rdfs:comment "Relates a story to one of its characters."@en ;
+                 rdfs:label "has character"@en .
+
+
+###  http://example.org/krr/story/hasEndingEvent
+krr:hasEndingEvent rdf:type owl:ObjectProperty ;
+                   rdfs:domain krr:Story ;
+                   rdfs:range krr:Event ;
+                   rdfs:comment "Relates a story to the event that ends it."@en ;
+                   rdfs:label "has ending event"@en .
+
+
+###  http://example.org/krr/story/hasEpisode
+krr:hasEpisode rdf:type owl:ObjectProperty ;
+               rdfs:domain krr:Story ;
+               rdfs:range krr:Episode ;
+               rdfs:comment "Relates a story to its episodes."@en ;
+               rdfs:label "has episode"@en .
+
+
+###  http://example.org/krr/story/hasPlotPoint
+krr:hasPlotPoint rdf:type owl:ObjectProperty ;
+                 rdfs:domain krr:Story ;
+                 rdfs:range krr:PlotPoint ;
+                 rdfs:comment "Relates a story to a narrative plot point."@en ;
+                 rdfs:label "has plot point"@en .
+
+
+###  http://example.org/krr/story/participatesInEvent
+krr:participatesInEvent rdf:type owl:ObjectProperty .
+
+
+###  http://example.org/krr/story/realizedByEvent
+krr:realizedByEvent rdf:type owl:ObjectProperty ;
+                    rdfs:domain krr:PlotPoint ;
+                    rdfs:range krr:Event ;
+                    rdfs:comment "Relates a plot point to the concrete event that realizes it."@en ;
+                    rdfs:label "realized by event"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/krr/story/Character
+krr:Character rdf:type owl:Class ;
+              rdfs:comment "A narrative agent represented in the story."@en ;
+              rdfs:label "character"@en .
+
+
+###  http://example.org/krr/story/Climax
+krr:Climax rdf:type owl:Class ;
+           rdfs:subClassOf krr:PlotPoint ;
+           rdfs:comment "Narrative high tension turning point."@en ;
+           rdfs:label "climax"@en .
+
+
+###  http://example.org/krr/story/ClimaxParticipant
+krr:ClimaxParticipant rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( krr:Character
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty krr:participatesInEvent ;
+                                                                   owl:someValuesFrom [ owl:intersectionOf ( krr:Event
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty [ owl:inverseOf krr:realizedByEvent
+                                                                                                                              ] ;
+                                                                                                               owl:someValuesFrom krr:Climax
+                                                                                                             ]
+                                                                                                           ) ;
+                                                                                        rdf:type owl:Class
+                                                                                      ]
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:comment "Character participating in an event that realizes a climax plot point."@en ;
+                      rdfs:label "climax participant"@en .
+
+
+###  http://example.org/krr/story/EndingParticipant
+krr:EndingParticipant rdf:type owl:Class ;
+                      owl:equivalentClass [ owl:intersectionOf ( krr:Character
+                                                                 [ rdf:type owl:Restriction ;
+                                                                   owl:onProperty krr:participatesInEvent ;
+                                                                   owl:someValuesFrom [ owl:intersectionOf ( krr:Event
+                                                                                                             [ rdf:type owl:Restriction ;
+                                                                                                               owl:onProperty krr:endsStory ;
+                                                                                                               owl:someValuesFrom krr:Story
+                                                                                                             ]
+                                                                                                           ) ;
+                                                                                        rdf:type owl:Class
+                                                                                      ]
+                                                                 ]
+                                                               ) ;
+                                            rdf:type owl:Class
+                                          ] ;
+                      rdfs:comment "Character participating in an event that ends a story."@en ;
+                      rdfs:label "ending participant"@en .
+
+
+###  http://example.org/krr/story/Episode
+krr:Episode rdf:type owl:Class ;
+            rdfs:comment "A segment of the story timeline and narrative."@en ;
+            rdfs:label "episode"@en .
+
+
+###  http://example.org/krr/story/Event
+krr:Event rdf:type owl:Class .
+
+
+###  http://example.org/krr/story/Item
+krr:Item rdf:type owl:Class ;
+         rdfs:comment "An object that may be used in events and actions."@en ;
+         rdfs:label "item"@en .
+
+
+###  http://example.org/krr/story/PlotPoint
+krr:PlotPoint rdf:type owl:Class ;
+              rdfs:comment "A narrative unit that structures story progression."@en ;
+              rdfs:label "plot point"@en .
+
+
+###  http://example.org/krr/story/Resolution
+krr:Resolution rdf:type owl:Class ;
+               rdfs:subClassOf krr:PlotPoint ;
+               rdfs:comment "Narrative closure after conflict."@en ;
+               rdfs:label "resolution"@en .
+
+
+###  http://example.org/krr/story/Story
+krr:Story rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty krr:hasEndingEvent ;
+                            owl:someValuesFrom krr:Event
+                          ] ;
+          rdfs:comment "A coherent narrative with characters, events, and a structure."@en ;
+          rdfs:label "story"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
